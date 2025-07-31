@@ -5,7 +5,7 @@ class ExportarService:
     def __init__(self, chunk_size=50000):
         self.chunk_size = chunk_size
 
-    def exportar_para_excel(self, registros, arquivo_saida="sped_exportado.xlsx"):
+    def exportarPlanilha(self, registros, arquivo_saida="sped_exportado.xlsx"):
         print(f"[EXPORTAÇÃO] Iniciando exportação para {arquivo_saida}...")
 
         with pd.ExcelWriter(arquivo_saida, engine="openpyxl", mode="w") as writer:
