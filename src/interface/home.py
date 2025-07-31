@@ -28,7 +28,6 @@ def HomePage(page: ft.Page):
         "total_files": 0,
         "processed_files": 0,
         "validos": 0,
-        "cancelados": 0,
         "errors": []
     }
 
@@ -99,7 +98,6 @@ def HomePage(page: ft.Page):
                 completedCard(
                     total_files=state['total_files'],
                     validos=state['validos'],
-                    cancelados=state['cancelados'],
                     erros=len(state['errors']),
                     lista_erros=state['errors'],
                     on_download=lambda e: salvar_picker.save_file(file_type="xlsx", dialog_title="Salvar planilha como..."),
@@ -114,15 +112,15 @@ def HomePage(page: ft.Page):
             state["folder_path"] = e.path
             state["folder_name"] = e.path.split("\\")[-1]
 
-            total_xml = len([
+            total_txt = len([
                 f for f in os.listdir(e.path)
-                if f.lower().endswith(".xml") and os.path.isfile(os.path.join(e.path, f))
+                if f.lower().endswith(".txt") and os.path.isfile(os.path.join(e.path, f))
             ])
 
-            state["total_files"] = total_xml
+            state["total_files"] = total_txt
             state["status"] = ProcessingState.FOLDER_SELECTED
 
-            notificacao(page, "Pasta selecionada", f"{e.path} - {total_xml} arquivos XML encontrados", tipo="info")
+            notificacao(page, "Pasta selecionada", f"{e.path} - {total_txt} arquivos XML encontrados", tipo="info")
             render()
 
     def iniciarProcessamento():
@@ -144,7 +142,6 @@ def HomePage(page: ft.Page):
                 notificacao(page, "Processamento concluído", resultado["mensagem"], tipo="sucesso")
                 state["status"] = ProcessingState.COMPLETED
                 state["validos"] = resultado["validos"]
-                state["cancelados"] = resultado["cancelados"]
                 state["errors"] = resultado["lista_erros"]
             else:
                 notificacao(page, "Erro", resultado["mensagem"], tipo="erro")
@@ -209,7 +206,6 @@ def HomePage(page: ft.Page):
             "total_files": 0,
             "processed_files": 0,
             "validos": 0,
-            "cancelados": 0,
             "errors": []
         })
         render()
