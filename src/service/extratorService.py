@@ -1,4 +1,4 @@
-from models.spedModel import RegistroSPED
+from src.models.spedModel import RegistroSPED
 from collections import defaultdict
 
 class ExtratorService:
