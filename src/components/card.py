@@ -122,7 +122,7 @@ def processingCard(folder_name: str, processed: int, total: int, on_start=None):
         )
     return ft.Column(card_content, spacing=12)
 
-def completedCard(total_files: int, validos: int, cancelados: int, erros: int, lista_erros: list, on_download, on_new_folder):
+def completedCard(total_files: int, validos: int, erros: int, lista_erros: list, on_download, on_new_folder):
     th = theme.get_theme()
     card_content = [
         ft.Row([
@@ -134,10 +134,6 @@ def completedCard(total_files: int, validos: int, cancelados: int, erros: int, l
             ft.Column([
                 ft.Text(str(validos), size=24, weight=ft.FontWeight.W_600, color=th["PRIMARY_COLOR"]),
                 ft.Text("Válidos", size=12, color=th["TEXT_SECONDARY"])
-            ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, expand=1),
-            ft.Column([
-                ft.Text(str(cancelados), size=24, weight=ft.FontWeight.W_600, color=ft.Colors.ORANGE_700),
-                ft.Text("Cancelados", size=12, color=th["TEXT_SECONDARY"])
             ], horizontal_alignment=ft.CrossAxisAlignment.CENTER, expand=1),
             ft.Column([
                 ft.Text(str(erros), size=24, weight=ft.FontWeight.W_600, color=th["ERROR"]),
