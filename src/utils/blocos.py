@@ -1,14 +1,3 @@
-BLOCOS_SPED = {
-    "Abertura e Identificação": ["0000"],
-    "Tabelas": ["0140", "0150", "0190", "0200", "0400"],
-    "Bloco A": ["A100", "A111", "A170"],
-    "Bloco C": ["C100", "C111", "C120", "C170", "C175", "C180", "C181", "C185", "C186", "C190"],
-    "Bloco D": ["D100", "D105", "D200", "D205", "D500", "D505"],
-    "Bloco F": ["F100", "F120", "F130", "F150", "F200", "F205", "F210", "F600", "F700", "F800"],
-    "Bloco M": ["M100", "M105", "M110", "M115", "M200", "M205", "M210", "M211", "M215", "M220","M225", "M230", "M235", "M300", "M305", "M350", "M400", "M410", "M500", "M505","M600", "M605", "M610", "M615"],        
-    "Bloco P": ["P100", "P200", "P210"]
-}
-
 LAYOUT_REGISTROS = {
     # BLOCO 0 - ABERTURA, IDENTIFICAÇÃO E REFERÊNCIAS
     "0000": ["REG", "COD_VER", "COD_FIN", "DT_INI", "DT_FIN", "NOME", "CNPJ", "UF", "COD_MUN", "SUFRAMA", "IND_NAT_PJ", "IND_ATIV"],
