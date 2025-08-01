@@ -37,11 +37,8 @@ class ExtratorController:
                         self.registros_consolidados[tipo] = []
                     self.registros_consolidados[tipo].extend(lista)
 
-                print(f"[PROCESSAMENTO] ✅ {arquivo} processado ({len(registros)} tipos de registros).")
-
             except Exception as e:
                 erro_msg = f"Falha ao processar {arquivo}: {e}"
-                print(f"[ERRO] ❌ {erro_msg}")
                 lista_erros.append(erro_msg)
 
             self.processados += 1

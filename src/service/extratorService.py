@@ -30,8 +30,4 @@ class ExtratorService:
                 registro = RegistroSPED(tipo=tipo, campos=campos)
                 registros[tipo].append(registro)
 
-                if contador % self.lote == 0:
-                    print(f"[INFO] {contador:,} linhas processadas até agora...")
-
-        print(f"[FINALIZADO] {contador:,} linhas processadas.")
         return registros
