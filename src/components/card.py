@@ -122,7 +122,7 @@ def processingCard(folder_name: str, processed: int, total: int, on_start=None):
         )
     return ft.Column(card_content, spacing=12)
 
-def completedCard(total_files: int, validos: int, erros: int, lista_erros: list, on_download, on_new_folder):
+def completedCard(total_files: int, validos: int, erros: int, lista_erros: list,registros_vazios: list, on_download, on_new_folder):          
     th = theme.get_theme()
     card_content = [
         ft.Row([
@@ -160,6 +160,7 @@ def completedCard(total_files: int, validos: int, erros: int, lista_erros: list,
             )
         ], spacing=12)
     ]
+
     if lista_erros:
         erros_visiveis = lista_erros[:3]
         mais_erros = len(lista_erros) - 3 if len(lista_erros) > 3 else 0
@@ -181,12 +182,35 @@ def completedCard(total_files: int, validos: int, erros: int, lista_erros: list,
             border_radius=8,
             padding=12
         ))
-        
+
+    if registros_vazios:
+        registros_visiveis = registros_vazios[:5]
+        mais_registros = len(registros_vazios) - 5 if len(registros_vazios) > 5 else 0
+        lista_registros_text = [ft.Text(f"• {reg}", size=12) for reg in registros_visiveis]
+        if mais_registros > 0:
+            lista_registros_text.append(
+                ft.Text(f"... e mais {mais_registros} registros sem dados.", size=12, italic=True, color=th["TEXT_SECONDARY"])
+            )
+
+        card_content.insert(-1, ft.Container(
+            content=ft.Column([
+                ft.Row([
+                    ft.Icon(ft.Icons.INFO, color=th["TEXT_SECONDARY"], size=14, tooltip="Sem dados presente nos arquivos"),
+                    ft.Text("Registros sem dados:", weight=ft.FontWeight.W_500, size=14),
+                ], spacing=8),
+                ft.Column(lista_registros_text, spacing=2)
+            ], spacing=8),
+            bgcolor=th["CARD"],
+            border=ft.border.all(1, th["TEXT_SECONDARY"]),
+            border_radius=8,
+            padding=12
+        ))
+
     return ft.Container(
-    content=ft.Column(
-        card_content,
-        spacing=16,
-        scroll=ft.ScrollMode.AUTO
-    ),
-    height=400
-)
+        content=ft.Column(
+            card_content,
+            spacing=16,
+            scroll=ft.ScrollMode.AUTO
+        ),
+        height=400
+    )

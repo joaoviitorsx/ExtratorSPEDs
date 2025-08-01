@@ -18,12 +18,15 @@ class ExtratorService:
                     continue
 
                 campos = linha.split("|")
+                campos = [c for c in campos if c != ""]
 
                 if len(campos) < 2:
                     continue
 
-                tipo = campos[1]
+                if len(campos) < 1:
+                    continue
 
+                tipo = campos[0]
                 registro = RegistroSPED(tipo=tipo, campos=campos)
                 registros[tipo].append(registro)
 

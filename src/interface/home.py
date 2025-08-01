@@ -28,7 +28,8 @@ def HomePage(page: ft.Page):
         "total_files": 0,
         "processed_files": 0,
         "validos": 0,
-        "errors": []
+        "errors": [],
+        "registros_vazios": []
     }
 
     pasta_picker = ft.FilePicker()
@@ -100,6 +101,7 @@ def HomePage(page: ft.Page):
                     validos=state['validos'],
                     erros=len(state['errors']),
                     lista_erros=state['errors'],
+                    registros_vazios=state['registros_vazios'],
                     on_download=lambda e: salvar_picker.save_file(file_type="xlsx", dialog_title="Salvar planilha como..."),
                     on_new_folder=lambda e: resetar()
                 )
@@ -142,7 +144,14 @@ def HomePage(page: ft.Page):
                 notificacao(page, "Processamento concluído", resultado["mensagem"], tipo="sucesso")
                 state["status"] = ProcessingState.COMPLETED
                 state["validos"] = resultado["validos"]
-                state["errors"] = resultado["lista_erros"]
+                state["errors"] = resultado.get("lista_erros", [])
+                
+                from src.utils.blocos import LAYOUT_REGISTROS
+                state["registros_vazios"] = [
+                    reg_code for reg_code in LAYOUT_REGISTROS.keys() 
+                    if reg_code not in controller.registros_consolidados or len(controller.registros_consolidados[reg_code]) == 0
+                ]
+                
             else:
                 notificacao(page, "Erro", resultado["mensagem"], tipo="erro")
                 state["status"] = ProcessingState.ERROR
@@ -164,6 +173,11 @@ def HomePage(page: ft.Page):
 
         def exportar():
             resultado_exportacao = controller.exportarPlanilha(caminho_planilha)
+            
+            if "registros_vazios" in resultado_exportacao:
+                state["registros_vazios"] = resultado_exportacao["registros_vazios"]
+            
+            render()
             if progresso_card in page.overlay:
                 page.overlay.remove(progresso_card)
                 page.update()
@@ -206,7 +220,8 @@ def HomePage(page: ft.Page):
             "total_files": 0,
             "processed_files": 0,
             "validos": 0,
-            "errors": []
+            "errors": [],
+            "registros_vazios": []
         })
         render()
 
